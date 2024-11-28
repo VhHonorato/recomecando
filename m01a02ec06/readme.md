@@ -36,5 +36,3 @@ Preencha a checklist para finalizar o exercício:
 - [ ] Commitar a cada mudança significativa ou na finalização do exercício (`git commit -m "Mensagem do commit"`)
 - [ ] Pushar os commits na sua branch na origem (`git push origin nome-da-branch`)
 - [ ] Realizar o pull request
-
-###### tags: `lógica` `módulo 1` `exercício de classe` `matemática` `nodeJS`
