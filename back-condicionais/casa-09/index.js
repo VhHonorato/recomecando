@@ -1,4 +1,4 @@
-const diaDaSemana = 7;
+const diaDaSemana = 1;
 
 if(diaDaSemana === 1){
     console.log("Segunda")
@@ -14,4 +14,6 @@ if(diaDaSemana === 1){
     console.log("Sabado")
 } else if(diaDaSemana === 7){
     console.log("Domingo")
-}    
+} else if(diaDaSemana < 1 || diaDaSemana > 7){
+    console.log("Dia da semana informado não é válido")
+}
