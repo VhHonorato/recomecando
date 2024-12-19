@@ -24,11 +24,19 @@ const carro = {
         } else {
             this.velocidade += 10;
         }
+    },
+    desacelerar: function(){
+        if(!this.ligado){
+            return console.log("Não é possível desacelerar um carro desligado")
+        } else if(this.velocidade > 0){
+            this.velocidade -= 10
+        }
     }
  
 }
 // carro.ligar();
 // carro.desligar();
-carro.acelerar();
+// carro.acelerar();
+carro.desacelerar();
 console.log(carro.ligado);
 console.log(carro.velocidade);
