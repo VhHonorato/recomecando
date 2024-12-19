@@ -38,9 +38,13 @@ const carro = {
     }
  
 }
+
+carro.desligar();
 carro.ligar();
+carro.ligar();
+carro.acelerar();
 carro.acelerar();
 carro.desacelerar();
 carro.desligar();
-console.log(carro.ligado);
-console.log(carro.velocidade);
+carro.acelerar();
+carro.desacelerar();
