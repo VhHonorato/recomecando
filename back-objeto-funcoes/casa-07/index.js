@@ -4,7 +4,7 @@ const prova = {
     valor: 10,
     questoes: [
         {
-            resposta: "a",
+            resposta: "b",
             correta: "b"
         },
         {
@@ -16,11 +16,11 @@ const prova = {
             correta: "b"
         },
         {
-            resposta: "b",
+            resposta: "e",
             correta: "b"
         },
         {
-            resposta: "c",
+            resposta: "a",
             correta: "c"
         }
     ]
