@@ -27,14 +27,14 @@ const prova = {
 };
 
 function corrigirProva(prova) {
-    let nota = 0;
+    let notaTotal = 0;
     let questao = 0;
     for(let nota of prova.questoes) {
         if(nota.resposta == nota.correta) {
-           nota += 2; 
+           notaTotal += 2; 
            questao += 1;
         }
     }
-    console.log(`O aluno(a) ${prova.aluno} acertou ${questao} questões e obteve nota ${nota}.`)
+    console.log(`O aluno(a) ${prova.aluno} acertou ${questao} questões e obteve nota ${notaTotal}.`)
 }
 corrigirProva(prova);
