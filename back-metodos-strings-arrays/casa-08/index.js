@@ -29,3 +29,8 @@ function formatEmail (email) {
 }
 
 formatEmail(email);
+
+function formatTags(tags){
+    console.log(tags.join(", "))
+}
+formatTags(tags);
