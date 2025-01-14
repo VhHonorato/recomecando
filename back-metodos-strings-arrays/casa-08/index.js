@@ -1,5 +1,5 @@
-let identificador = "123";
-let nome = "José silva costa";
+let identificador = "12311";
+let nome = "José silva costa vieira junior";
 let email = "      jose@email.com  ";
 let tags = ['financeiro', 'administrativo', 'geral'];
 
@@ -23,3 +23,9 @@ formatIdentificador(identificador);
 }
 
 formatNome(nome);
+
+function formatEmail (email) {
+    console.log(email.trim());
+}
+
+formatEmail(email);
