@@ -1,7 +1,7 @@
 let identificador = "12311";
 let nome = "José silva costa vieira junior";
 let email = "      jose@email.com  ";
-let tags = ['financeiro', 'administrativo', 'geral'];
+let tags = ['financeiro', 'administrativo', 'geral', 'home office' ];
 
 function formatIdentificador (identificador) {
     console.log(identificador.padStart(6,"0"));
