@@ -22,3 +22,10 @@ const alunos = [
         roupaDeDormir: "só cueca"
     }
 ];
+
+for(let i=0; i<alunos.length; i++){
+
+const {apelido, signo, bandaFavorita, serieFavorita, roupaDeDormir, ...alunosResumido } = alunos[i];
+console.log(alunosResumido);
+
+}
