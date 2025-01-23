@@ -8,3 +8,9 @@ const pessoa = {
         "Carluxo"
     ]
 };
+
+const {nome:nomeDaPessoa, idade:idadeDaPessoa, ...infosAdicionais} = pessoa;
+
+console.log(nomeDaPessoa);
+console.log(idadeDaPessoa);
+console.log(infosAdicionais);
