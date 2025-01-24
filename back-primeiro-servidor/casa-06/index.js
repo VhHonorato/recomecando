@@ -13,11 +13,12 @@ let minutos = 0;
         } 
  }
  let cronometroId = 0;
-  
-    console.log(`Tempo atual do cronômetro: ${minutos} minutos e ${segundos} segundos`)
+//   let minutoPad = String(minutos).padStart(2, 0);
+//   let segundoPad = String(segundos).padStart(2, 0);
 
+  console.log(minutos + segundos)
 app.get("/", (req, res) => {
-    res.send(`Tempo atual do cronômetro: ${minutos} minutos e ${segundos} segundos`)
+    res.send(`Tempo atual do cronômetro: ${String(minutos).padStart(2, 0)} minutos e ${String(segundos).padStart(2, 0)} segundos`)
 });
 
 app.get("/:controle", (req, res) => {
@@ -31,18 +32,11 @@ app.get("/:controle", (req, res) => {
         clearInterval(cronometroId);
         res.send("Cronometro pausado")
     } else if(req.params.controle == "zerar"){
-    
         minutos = 0;
         segundos = 0;
         res.send("Cronometro zerado!")
     }
 });
-// app.get("/pausar", (req, res) => {
-//     clearInterval(cronometroId);
-//     res.send("Cronometro pausado")
-// });
-
-
 
 
 
