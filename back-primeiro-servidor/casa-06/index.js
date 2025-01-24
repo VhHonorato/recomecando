@@ -20,15 +20,29 @@ app.get("/", (req, res) => {
     res.send(`Tempo atual do cronômetro: ${minutos} minutos e ${segundos} segundos`)
 });
 
-app.get("/iniciar", (req, res) => {
-    cronometroId = setInterval( cronometro, 1000);
-  
-    res.send("Cronometro iniciado")
+app.get("/:controle", (req, res) => {
+    if(req.params.controle == "iniciar"){
+        cronometroId = setInterval( cronometro, 1000);  
+        res.send("Cronometro iniciado");
+    } else if(req.params.controle == "continuar"){
+        cronometroId = setInterval( cronometro, 1000);
+        res.send("Cronometro continuado");
+    } else if(req.params.controle == "pausar"){
+        clearInterval(cronometroId);
+        res.send("Cronometro pausado")
+    } else if(req.params.controle == "zerar"){
+    
+        minutos = 0;
+        segundos = 0;
+        res.send("Cronometro zerado!")
+    }
 });
-app.get("/pausar", (req, res) => {
-    clearInterval(cronometroId);
-    res.send("Cronometro pausado")
-})
+// app.get("/pausar", (req, res) => {
+//     clearInterval(cronometroId);
+//     res.send("Cronometro pausado")
+// });
+
+
 
 
 
