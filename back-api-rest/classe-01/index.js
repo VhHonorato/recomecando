@@ -23,13 +23,32 @@ app.get('/convidados', (req, res) => {
         if(!convidado){
             res.json(lista.mensagem = "O convidado buscado não está na lista.");
         }else{
-            res.json(lista.mensagem = "O convidado presente.")
+            res.json(lista.mensagem = "Convidado presente.")
         }
     } else{
         res.json(convidados);
     }
 });
 
+//c) Adicionar um nome na lista de convidados
+
+app.post('/convidados', (req, res) => {
+    const novoConvidado = {
+        nome: req.body.nome.trim()
+    };
+    console.log(novoConvidado.nome);
+    const convidado = convidados.find((convidado) => convidado === novoConvidado.nome);
+    const lista = {
+        mensagem: "" 
+    }
+    console.log(convidado);
+    if(convidado){
+        res.json(lista.mensagem = "O nome do convidado a ser adicionado já existe na lista. Caso queira adicionar outro convidado do mesmo nome, favor fornecer o sobrenome também.")
+    } else {
+        convidados.push(novoConvidado.nome);
+        res.json(lista.mensagem = "Convidado adicionado.")
+    };
+})
 
 
 app.listen(8000);
