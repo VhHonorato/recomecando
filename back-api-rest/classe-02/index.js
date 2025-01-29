@@ -36,7 +36,7 @@ app.get("/livros/:id", (req, res) => {
     const livro = livros.find( livro => livro.id === Number(req.params.id));
     if(livro){
         res.json(livro);
-    }else if((ehNaN)){
+    }else if(ehNaN){
         res.json(biblioteca.mesagem = "O valor do parametro ID da URL não é um numero válido.");
     }else {
         res.json(biblioteca.mesagem = "Não existe livro para ID informado.");
@@ -59,6 +59,27 @@ app.post('/livros', (req, res) => {
     proximoID += 1;
     console.log(proximoID);
     res.json(livroAdd);
-})   
+});
+
+//d) Substituindo um livro
+
+app.put("/livros/:id", (req, res) => {
+    const livro = livros.find(livro => livro.id === Number(req.params.id));
+    const biblioteca = {
+        mensagem: ""
+    };
+    const ehNaN = isNaN(req.params.id);
+    if(livro){
+        livro.titulo = "Jonas e a pedra Sentimental",
+        livro.autor = "Clarice Crawling",
+        livro.ano = "2015",
+        livro.numPaginas = 184
+        res.json(biblioteca.mensagem = "Livro Substituído.");
+    } else if(ehNaN){
+        res.json(biblioteca.mesagem = "O valor do parametro ID da URL não é um numero válido.");
+    } else {
+        res.json(biblioteca.mensagem = "Não existe livro a ser substituído para o ID informado");
+    }
+})
 
 app.listen(8000);
