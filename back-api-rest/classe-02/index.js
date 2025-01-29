@@ -81,5 +81,23 @@ app.put("/livros/:id", (req, res) => {
         res.json(biblioteca.mensagem = "Não existe livro a ser substituído para o ID informado");
     }
 })
+ // f) Remoção de um livro
 
+ app.delete("/livros/:id", (req, res) => {
+    const livro = livros.find(livro => livro.id === Number(req.params.id));
+    const indice = livros.indexOf(livro);
+    const biblioteca = {
+        mensagem: ""
+    };
+    const ehNaN = isNaN(req.params.id);
+    if(livro){
+        livros.splice(indice,1);
+        res.json(biblioteca.mensagem = "Livro Removido.")
+    } else if(ehNaN){
+        res.json(biblioteca.mesagem = "O valor do parametro ID da URL não é um numero válido.");
+    } else {
+        res.json(biblioteca.mensagem = "Não existe livro a ser substituído para o ID informado");
+    }
+
+ })
 app.listen(8000);
