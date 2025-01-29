@@ -47,5 +47,18 @@ app.get("/livros/:id", (req, res) => {
    // Adicionar um livro
 let proximoID = 3;
 
+app.post('/livros', (req, res) => {
+    const livroAdd = {
+        id: proximoID,
+        titulo: req.body.titulo,
+        autor: req.body.autor,
+        ano: req.body.ano,
+        numPaginas: req.body.numPaginas
+    };
+    livros.push(livroAdd);
+    proximoID += 1;
+    console.log(proximoID);
+    res.json(livroAdd);
+})   
 
 app.listen(8000);
