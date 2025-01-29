@@ -50,5 +50,21 @@ app.post('/convidados', (req, res) => {
     };
 })
 
+// d) Remover um nome da lista de convidados
+
+app.delete('/convidados/:nome', (req, res) => {
+    const convidado = convidados.find((convidado) => convidado === req.params.nome);
+    const lista = {
+        mensagem: "" 
+    }
+    console.log(convidado); 
+    if(convidado){
+        const indice = convidados.indexOf(convidado, 0);
+        convidados.splice(indice, 1);
+        res.json(lista.mensagem = "Convidado removido.")
+    } else {
+        res.json(lista.mensagem = "O nome do convidado a ser removido não existe na lista. Nenhum convidado removido.")
+    }
+})
 
 app.listen(8000);
