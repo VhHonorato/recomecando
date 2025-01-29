@@ -26,4 +26,26 @@ app.get("/livros", (req, res) => {
     res.json(livros);
 });
 
+//b) Consulta de um livro por ID
+
+app.get("/livros/:id", (req, res) => {
+    const biblioteca = {
+        mesagem: ""
+    }
+    const ehNaN = isNaN(req.params.id);
+    const livro = livros.find( livro => livro.id === Number(req.params.id));
+    if(livro){
+        res.json(livro);
+    }else if((ehNaN)){
+        res.json(biblioteca.mesagem = "O valor do parametro ID da URL não é um numero válido.");
+    }else {
+        res.json(biblioteca.mesagem = "Não existe livro para ID informado.");
+    }
+   
+   });
+
+   // Adicionar um livro
+let proximoID = 3;
+
+
 app.listen(8000);
