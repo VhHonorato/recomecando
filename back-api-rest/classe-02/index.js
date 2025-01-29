@@ -70,10 +70,10 @@ app.put("/livros/:id", (req, res) => {
     };
     const ehNaN = isNaN(req.params.id);
     if(livro){
-        livro.titulo = "Jonas e a pedra Sentimental",
-        livro.autor = "Clarice Crawling",
-        livro.ano = "2015",
-        livro.numPaginas = 184
+        livro.titulo = req.body.titulo,
+        livro.autor = req.body.autor,
+        livro.ano = req.body.ano,
+        livro.numPaginas = req.body.numPaginas
         res.json(biblioteca.mensagem = "Livro Substituído.");
     } else if(ehNaN){
         res.json(biblioteca.mesagem = "O valor do parametro ID da URL não é um numero válido.");
