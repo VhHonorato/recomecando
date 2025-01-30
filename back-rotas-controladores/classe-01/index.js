@@ -1,10 +1,9 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const roteador = require('./roteadores');
 const app = express();
 app.use(express.json());
-const {consultaImoveis, consultaImoveisId} = require('./controladores/imoveis');
+app.use(roteador);
 
-app.get("/imoveis", consultaImoveis);
-app.get("/imoveis/:id", consultaImoveisId);
+
 
 app.listen(8000);
