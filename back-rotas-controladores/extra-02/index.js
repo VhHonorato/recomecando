@@ -1,9 +1,14 @@
 const express = require('express');
-const app = express();
+const roteador = require('./roteador');
 const bodyParser = require('body-parser');
+const {senha} = require('./intermediarios');
+
+const app = express();
+
 app.use(express.json());
 app.use(bodyParser.json());
-const roteador = require('./roteador');
+
+app.use(senha);
 app.use(roteador);
 
 
