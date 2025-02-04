@@ -92,9 +92,31 @@ function cadastrarAluno(req, res) {
     res.json({message: "Aluno adicionado."})
 };
 
+function excluirAlunoId (req, res) {
+    const idAluno = alunos.find(alunoId => alunoId.id === Number(req.params.id));
+    const indiceAluno = alunos.indexOf(idAluno);
+    const ehNan = isNaN(req.params.id);
+    
+
+     if(alunos.length < 1){
+        res.status(404);
+        res.json({message: "Lista de alunos vazia."})
+    }else if(ehNan){
+        res.status(400);
+        res.json({message:"O ID inserido para exclusão deve ser um número válido."})
+    } else if(!idAluno){
+        res.status(404);
+        res.json({message:"Aluno a ser excluido não foi encontrado."})
+    } else{
+        res.status(200);
+        const alunoExcluido = alunos.splice(indiceAluno,1);
+        res.json(alunoExcluido);
+    }
+}
+
 module.exports = {
     consultarAlunos,
     consultarAlunosId,
     cadastrarAluno,
-    
+    excluirAlunoId
 };
