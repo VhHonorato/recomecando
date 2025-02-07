@@ -16,11 +16,7 @@ async function consultarPokemon (req, res){
     const nomeOuIdPokemon = req.params.idOuNome;
     const buscarPokemon = await axios.get(`https://pokeapi.co/api/v2/pokemon/${nomeOuIdPokemon}/`);
     const {id, name, height, weight, base_experience, forms, abilities, species } = buscarPokemon.data;
-    console.log(buscarPokemon);
-    if(!buscarPokemon){
-        res.status(404);
-        res.send(404);
-    }
+    
     res.json({
         id,
         name,

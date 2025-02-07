@@ -1,12 +1,9 @@
 const express = require('express');
-
-const {consultarListaPokemon, consultarPokemon} = require('./controladores/pokemon')
+const roteador = require('./roteadores');
 const app = express();
 app.use(express.json());
 
 
-app.get("/pokemon/", consultarListaPokemon);
-
-app.get("/pokemon/:idOuNome", consultarPokemon)
+app.use(roteador);
 
 app.listen(8000);
