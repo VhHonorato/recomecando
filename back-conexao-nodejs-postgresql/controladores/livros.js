@@ -2,7 +2,9 @@ const conexao = require('../conexao');
 
 const listarLivros = async (req, res) => {
 try {
-    const {rows:livros} = await conexao.query('select * from livros');
+    const query = 'select l.id, l.nome, a.nome as nome_autor, l.editora, l.genero, l.data_publicacao from livros l left join autores a on l.autor_id = a.id';
+
+    const {rows:livros} = await conexao.query(query);
     
      res.status(200).json(livros);
 
