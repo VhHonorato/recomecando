@@ -16,7 +16,8 @@ try {
 const obterLivro = async (req, res) => {
     const {id} = req.params;
     try {
-        const livro = await conexao.query('select * from livros where id = $1', [id]);
+        const query = 'select l.id, l.nome, a.nome as nome_autor, l.editora, l.genero, l.data_publicacao from livros l left join autores a on l.autor_id = a.id where l.id = $1';
+        const livro = await conexao.query(query, [id]);
 
         if(livro.rowCount === 0){
             return res.status(404).json("Livro não encontrado");
