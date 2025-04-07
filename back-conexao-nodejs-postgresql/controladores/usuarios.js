@@ -25,10 +25,46 @@ const obterUsuario = async (req,res) =>{
     } catch (error) {
         res.status(400).json(error.message);
     }
+};
+
+const cadastrarUsuario = async (req, res) =>{
+    const {nome, idade, email, telefone, cpf} = req.body;
+    try {
+        if(!nome){
+           return res.status(400).json('O campo nome é obrigatório.')
+        };
+        if(!email){
+           return res.status(400).json('O campo email é obrigatório.')
+        };
+        if(!cpf){
+            return res.status(400).json('O campo cpf é obrigatório.')  
+        };
+        const {rows : usuarios} = await conexao.query('select * from usuarios')
+        for (const usuario of usuarios) {
+            if(usuario.email === email){
+                return res.status(400).json('Email já cadastrado');
+            };
+        };
+        for (const usuario of usuarios) {
+            if(usuario.cpf === cpf){
+                return res.status(400).json('CPF já cadastrado');
+            };
+        };
+        const cadastrarLivro = await conexao.query('insert into usuarios (nome, idade, email, telefone, cpf) values ($1, $2, $3, $4, $5)', [nome, idade, email, telefone, cpf]);
+        
+        if(cadastrarLivro.rowCount === 0){
+            return res.status(400).json('Não foi possível cadastrar o usuário');
+        }
+        return res.status(200).json('Usuário cadastrado com sucesso!');
+
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
 }
 
 module.exports = {
     listarUsuarios,
-    obterUsuario
+    obterUsuario,
+    cadastrarUsuario
 }
 
