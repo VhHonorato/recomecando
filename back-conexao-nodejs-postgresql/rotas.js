@@ -21,7 +21,7 @@ rotas.delete('/livros/:id', livros.excluirLivro);
 rotas.get('/usuarios', usuarios.listarUsuarios);
 rotas.get('/usuarios/:id', usuarios.obterUsuario);
 rotas.post('/usuarios', usuarios.cadastrarUsuario);
-// rotas.put('/usuarios/:id', usuarios.atualizarUsuario);
+rotas.put('/usuarios/:id', usuarios.atualizarUsuario);
 // rotas.delete('/usuarios/:id', usuarios.excluirUsuario);
 
 

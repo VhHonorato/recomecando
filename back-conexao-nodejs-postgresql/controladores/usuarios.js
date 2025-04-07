@@ -60,11 +60,57 @@ const cadastrarUsuario = async (req, res) =>{
     } catch (error) {
         res.status(400).json(error.message);
     }
+};
+
+const atualizarUsuario = async (req, res) =>{
+    const {nome, idade, email, telefone, cpf} = req.body;
+    const{id} = req.params; 
+
+    try {
+        if(!nome){
+            return res.status(400).json('O campo nome é obrigatório.')
+         };
+         if(!email){
+            return res.status(400).json('O campo email é obrigatório.')
+         };
+         if(!cpf){
+             return res.status(400).json('O campo cpf é obrigatório.')  
+         };
+        const {rows: usuarios} = await conexao.query('select * from usuarios where id = $1', [id]);
+       
+        if(!usuarios){
+            return res.status(400).json('Usuário não encontrado.');
+        };
+        const {rows: usuario} = await conexao.query('select * from usuarios where id != $1', [id]);
+           
+        const emaillUtilizado = usuario.some(x => x.email === email);
+            
+            if(emaillUtilizado){
+               
+                return res.status(400).json('Email já cadastrado');
+            };
+        
+        const cpfUtilizado = usuario.some(x => x.cpf === cpf)    
+          
+            if(cpfUtilizado){
+                
+                return res.status(400).json('CPF já cadastrado');
+            };
+            
+        const atualizandoUsuario = await conexao.query('update usuarios set nome = $1, idade = $2, email = $3, telefone = $4, cpf = $5 where id = $6', [nome, idade, email, telefone, cpf, id]);
+        if(atualizandoUsuario.rowCount === 0){
+            return res.status(400).json('Não foi possível atualizar o usuário.')
+        }
+        return res.status(200).json('Usuário atualizado com sucesso!');
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
 }
 
 module.exports = {
     listarUsuarios,
     obterUsuario,
-    cadastrarUsuario
+    cadastrarUsuario,
+    atualizarUsuario
 }
 
