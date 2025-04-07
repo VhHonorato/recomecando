@@ -2,7 +2,12 @@ const conexao = require('../conexao')
 
 const listarAutores = async (req, res) => {
     try {
+        
         const {rows: autores} = await conexao.query('select * from autores');
+        for (const autor of autores) {
+            const {rows: livros} = await conexao.query('select * from livros where autor_id = $1', [autor.id]);
+            autor.livros = livros;
+        }
         res.status(200).json(autores);
     } catch (error) {
         res.status(400).json(error.message);
