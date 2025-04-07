@@ -41,7 +41,7 @@ const cadastrarAutor = async (req, res) => {
       const autor = await conexao.query('insert into autores (nome, idade) values ($1, $2)', [nome, idade]);
 
       if(autor.rowCount === 0){
-        return res.status(400).json("Não foi possível cadastrar o autor");
+        
 
       } 
       return res.status(200).json("Autor casdastrado com sucesso.") 

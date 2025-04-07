@@ -1,7 +1,7 @@
 const express = require('express');
 const autores = require('./controladores/autores');
 const livros = require('./controladores/livros');
-
+const usuarios = require('./controladores/usuarios');
 const rotas = express();
 
 //autores
@@ -17,7 +17,12 @@ rotas.post('/livros', livros.cadastrarLivro);
 rotas.put('/livros/:id', livros.atualizarLivro);
 rotas.delete('/livros/:id', livros.excluirLivro);
 
-
+// usuarios
+rotas.get('/usuarios', usuarios.listarUsuarios);
+// rotas.get('/usuarios:id', usuarios.obterUsuario);
+// rotas.post('/usuarios', usuarios.cadastrarUsuario);
+// rotas.put('/usuarios/:id', usuarios.atualizarUsuario);
+// rotas.delete('/usuarios/:id', usuarios.excluirUsuario);
 
 
 
