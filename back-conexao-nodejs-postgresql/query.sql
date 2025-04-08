@@ -35,3 +35,17 @@ insert into usuarios (nome, idade, email, telefone, cpf)
 values
 ('Victo Hugo', 32, 'vhhonorato@hotmail.com', '71992913060', '05073158555');
 
+drop table if exists emprestimos;
+
+create table emprestimos (
+	id serial primary key,
+  usuario_id integer not null,
+  livro_id integer not null,
+  status varchar(10) default 'pendente',
+  foreign key(usuario_id) references usuarios (id),
+  foreign key (livro_id) references livros (id)
+);
+
+--Para testar a tabela emprestimos
+insert into emprestimos (usuario_id, livro_id)
+values (2, 5);
