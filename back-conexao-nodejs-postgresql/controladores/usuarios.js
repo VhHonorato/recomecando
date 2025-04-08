@@ -18,7 +18,7 @@ const obterUsuario = async (req,res) =>{
     try {
         const usuario = await conexao.query('select * from usuarios where id = $1', [id]);
         if(usuario.rowCount === 0){
-            return res.status(400).json('Usuario não encontrado')
+            return res.status(404).json('Usuario não encontrado')
         }
 
         return res.status(200).json(usuario.rows[0])
@@ -79,7 +79,7 @@ const atualizarUsuario = async (req, res) =>{
         const {rows: usuarios} = await conexao.query('select * from usuarios where id = $1', [id]);
        
         if(!usuarios){
-            return res.status(400).json('Usuário não encontrado.');
+            return res.status(404).json('Usuário não encontrado.');
         };
         const {rows: usuario} = await conexao.query('select * from usuarios where id != $1', [id]);
            
@@ -105,12 +105,33 @@ const atualizarUsuario = async (req, res) =>{
     } catch (error) {
         res.status(400).json(error.message);
     }
+};
+
+const excluirUsuario = async (req, res) => {
+    const {id} = req.params;
+    
+    try {
+        const usuario = await conexao.query('select * from usuarios where id = $1', [id]);
+        if(usuario.rowCount === 0){
+            return res.status(404).json('Usuário não encontrado.');
+        };
+
+        const excluirUsuario = await conexao.query('delete from usuarios where id = $1', [id]);
+        if(excluirUsuario.rowCount === 0){
+            return res.status(400).json('Não foi possível excluir o usuário.');
+        };
+
+        return res.status(200).json('Usuário excluido com sucesso!');
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
 }
 
 module.exports = {
     listarUsuarios,
     obterUsuario,
     cadastrarUsuario,
-    atualizarUsuario
+    atualizarUsuario,
+    excluirUsuario
 }
 
