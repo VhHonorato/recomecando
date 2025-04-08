@@ -11,7 +11,7 @@ const listarEmprestimos = async (req, res) => {
         res.status(400).json(error.message)
     }
 };
-const obterUsuario = async (req,res) =>{
+const obterEmprestimo = async (req,res) =>{
     const {id} = req.params;
     
     try {
@@ -124,5 +124,6 @@ const excluiremprestimo = async (req, res) => {
 }
 
 module.exports = {
-    listarEmprestimos
+    listarEmprestimos,
+    obterEmprestimo
 }

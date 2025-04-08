@@ -27,9 +27,9 @@ rotas.delete('/usuarios/:id', usuarios.excluirUsuario);
 
 // emprestimos
 rotas.get('/emprestimos', emprestimos.listarEmprestimos);
-// rotas.get('/emprestimos/:id', emprestimos.obterUsuario);
+rotas.get('/emprestimos/:id', emprestimos.obterEmprestimo);
 // rotas.post('/emprestimos', emprestimos.cadastrarUsuario);
-// rotas.put('/emprestimos/:id', emprestimos.atualizarUsuario);
-// rotas.delete('/emprestimos/:id', emprestimos.excluirUsuario);
+// rotas.put('/emprestimos/:id', emprestimos.atualizarEmprestimo);
+// rotas.delete('/emprestimos/:id', emprestimos.excluirEmprestimo);
 
 module.exports = rotas;
