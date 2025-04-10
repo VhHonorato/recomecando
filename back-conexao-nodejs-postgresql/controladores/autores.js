@@ -91,11 +91,7 @@ const excluirAutor = async (req, res) => {
                 return res.status(400).json("Não é possível excluir autor com livros vinculados a ele.") 
             }
         }
-        // const autorComLivro = livros.some(x => x.autor_id === id);
-        // if(autorComLivro){
-        //     return res.status(400).json("Não é possível excluir autore com livros vinculados a ele.")
-        // }
-
+   
         const excluirAutorAutor = await conexao.query('delete from autores where id = $1', [id]);
 
         if(excluirAutorAutor.rowCount === 0){

@@ -3,6 +3,10 @@ const conexao = require('../conexao');
 const listarUsuarios = async (req, res) => {
     try {
         const {rows: usuarios} = await conexao.query('select * from usuarios');
+        for (const usuario of usuarios) {
+            const {rows: emprestimos} = await conexao.query('select * from emprestimos where usuario_id = $1', [usuario.id]);
+            usuario.emprestimos = emprestimos;
+        }
         if(usuarios.rowCount === 0){
             res.status(400).json('Nenhum usuario cadastrado')
         }
