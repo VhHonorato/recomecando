@@ -32,9 +32,18 @@ const cadastrarEmprestimo = async (req, res) =>{
            return res.status(400).json('O campo usuário_id é obrigatório.')
         };
         if(!livro_id){
-           return res.status(400).json('O campo livro é obrigatório.')
+           return res.status(400).json('O campo livro_id é obrigatório.')
         };
-      
+        const livro = await conexao.query('select * from livros where id = $1', [livro_id]);
+        
+                if(livro.rowCount === 0){
+                    return res.status(404).json("Não existe livro associado a esse ID.");
+                }
+        const usuario = await conexao.query('select * from usuarios where id = $1', [usuario_id]);
+                if(usuario.rowCount === 0){
+                    return res.status(404).json('Não existe usuário associado a esse ID.')
+                }        
+
         if(!status){
             const cadastrarEmprestimo = await conexao.query('insert into emprestimos (usuario_id, livro_id) values ($1, $2)', [usuario_id, livro_id]);
             if(cadastrarEmprestimo.rowCount === 0){
@@ -42,16 +51,24 @@ const cadastrarEmprestimo = async (req, res) =>{
             }
             return res.status(200).json('Emprestimo cadastrado com sucesso!');
         };
-        console.log(status);
-        if(status == "pendente"|| "devolvido"){
-            const cadastrarEmprestimo = await conexao.query('insert into emprestimos (usuario_id, livro_id, status) values ($1, $2, $3)', [usuario_id, livro_id, status]);
         
-            if(cadastrarEmprestimo.rowCount === 0){
-            return res.status(400).json('Não foi possível cadastrar o emprestimo');
-            }
-            return res.status(200).json('Emprestimo cadastrado com sucesso!');
-        }    
-        return res.status(400).json("Os status validos são 'pendente' ou 'devolvido'.");
+        if(status == "pendente"){
+            console.log(status);
+            const cadastrarEmprestimo = await conexao.query('insert into emprestimos (usuario_id, livro_id, status) values ($1, $2, $3)', [usuario_id, livro_id, status]);
+        if(cadastrarEmprestimo.rowCount === 0){
+            return res.status(400).json('Não foi possível cadastrar o emprestimo.')
+        }
+        return res.status(200).json('Emprestimo cadastrado com sucesso!');
+        }else if(status == "devolvido"){
+            const cadastrarEmprestimo = await conexao.query('insert into emprestimos (usuario_id, livro_id, status) values ($1, $2, $3)', [usuario_id, livro_id, status]);
+        if(cadastrarEmprestimo.rowCount === 0){
+            return res.status(400).json('Não foi possível cadastrar o emprestimo.')
+        }
+        return res.status(200).json('Emprestimo cadastrado com sucesso!');
+        }else{
+            return res.status(400).json("Os status validos são 'pendente' ou 'devolvido'.");
+        }
+        
         
 
     } catch (error) {
@@ -59,45 +76,39 @@ const cadastrarEmprestimo = async (req, res) =>{
     }
 };
 const atualizaremprestimo = async (req, res) =>{
-    const {nome, idade, email, telefone, cpf} = req.body;
+    const {status} = req.body;
     const{id} = req.params; 
 
     try {
-        if(!nome){
-            return res.status(400).json('O campo nome é obrigatório.')
+        if(!status){
+            return res.status(400).json('O campo status é obrigatório.')
          };
-         if(!email){
-            return res.status(400).json('O campo email é obrigatório.')
-         };
-         if(!cpf){
-             return res.status(400).json('O campo cpf é obrigatório.')  
-         };
+       
         const {rows: emprestimos} = await conexao.query('select * from emprestimos where id = $1', [id]);
        
         if(!emprestimos){
-            return res.status(404).json('Usuário não encontrado.');
+            return res.status(404).json('Emprestimo não encontrado.');
         };
-        const {rows: emprestimo} = await conexao.query('select * from emprestimos where id != $1', [id]);
-           
-        const emaillUtilizado = emprestimo.some(x => x.email === email);
-            
-            if(emaillUtilizado){
-               
-                return res.status(400).json('Email já cadastrado');
-            };
-        
-        const cpfUtilizado = emprestimo.some(x => x.cpf === cpf)    
-          
-            if(cpfUtilizado){
-                
-                return res.status(400).json('CPF já cadastrado');
-            };
-            
-        const atualizandoemprestimo = await conexao.query('update emprestimos set nome = $1, idade = $2, email = $3, telefone = $4, cpf = $5 where id = $6', [nome, idade, email, telefone, cpf, id]);
+
+        if(status == "pendente"){
+            console.log(status);
+            const atualizandoemprestimo = await conexao.query('update emprestimos set status = $1 where id = $2', [status, id]);
         if(atualizandoemprestimo.rowCount === 0){
-            return res.status(400).json('Não foi possível atualizar o usuário.')
+            return res.status(400).json('Não foi possível atualizar o emprestimo.')
         }
-        return res.status(200).json('Usuário atualizado com sucesso!');
+        return res.status(200).json('Emprestimo atualizado com sucesso!');
+        }else if(status == "devolvido"){
+            const atualizandoemprestimo = await conexao.query('update emprestimos set status = $1 where id = $2', [status, id]);
+            if(atualizandoemprestimo.rowCount === 0){
+            return res.status(400).json('Não foi possível atualizar o emprestimo.')
+            }
+            return res.status(200).json('Emprestimo atualizado com sucesso!');
+        }else{
+            return res.status(400).json("Os status validos são 'pendente' ou 'devolvido'.");
+        }
+                  
+        
+
     } catch (error) {
         res.status(400).json(error.message);
     }
@@ -125,5 +136,6 @@ const excluiremprestimo = async (req, res) => {
 module.exports = {
     listarEmprestimos,
     obterEmprestimo,
-    cadastrarEmprestimo
+    cadastrarEmprestimo,
+    atualizaremprestimo
 }
