@@ -82,12 +82,27 @@ const excluirAutor = async (req, res) => {
         if(autor.rowCount === 0){
             return res.status(404).json('Autor não encontrado');
         };
+
+        const {rows: livros} = await conexao.query('select * from livros');
+       
+        for (const livro of livros) {
+            console.log(livro.autor_id)
+            if(livro.autor_id == id){
+                return res.status(400).json("Não é possível excluir autor com livros vinculados a ele.") 
+            }
+        }
+        // const autorComLivro = livros.some(x => x.autor_id === id);
+        // if(autorComLivro){
+        //     return res.status(400).json("Não é possível excluir autore com livros vinculados a ele.")
+        // }
+
         const excluirAutorAutor = await conexao.query('delete from autores where id = $1', [id]);
 
         if(excluirAutorAutor.rowCount === 0){
             return res.status(404).json('Não foi possível excluir o autor.');
         };
-       
+        
+
         return res.status(200).json("Autor excluído com sucesso.") 
         
     } catch (error) {
