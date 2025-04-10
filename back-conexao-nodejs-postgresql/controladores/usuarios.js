@@ -21,11 +21,17 @@ const obterUsuario = async (req,res) =>{
     
     try {
         const usuario = await conexao.query('select * from usuarios where id = $1', [id]);
+        const {rows: usuarios} = await conexao.query('select * from usuarios where id = $1', [id]);
+        for (const usuario of usuarios) {
+            const {rows: emprestimos} = await conexao.query('select * from emprestimos where usuario_id = $1', [id]);
+            usuario.emprestimos = emprestimos;
+        }
+       
         if(usuario.rowCount === 0){
             return res.status(404).json('Usuario não encontrado')
         }
-
-        return res.status(200).json(usuario.rows[0])
+        console.log(usuarios);
+        return res.status(200).json(usuarios)
     } catch (error) {
         res.status(400).json(error.message);
     }
