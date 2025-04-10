@@ -119,15 +119,15 @@ const excluiremprestimo = async (req, res) => {
     try {
         const emprestimo = await conexao.query('select * from emprestimos where id = $1', [id]);
         if(emprestimo.rowCount === 0){
-            return res.status(404).json('Usuário não encontrado.');
+            return res.status(404).json('Emprestimo não encontrado.');
         };
 
         const excluirEmprestimo = await conexao.query('delete from emprestimos where id = $1', [id]);
         if(excluirEmprestimo.rowCount === 0){
-            return res.status(400).json('Não foi possível excluir o usuário.');
+            return res.status(400).json('Não foi possível excluir o emprestimo.');
         };
 
-        return res.status(200).json('Usuário excluido com sucesso!');
+        return res.status(200).json('Emprestimo excluido com sucesso!');
     } catch (error) {
         res.status(400).json(error.message);
     }
@@ -137,5 +137,6 @@ module.exports = {
     listarEmprestimos,
     obterEmprestimo,
     cadastrarEmprestimo,
-    atualizaremprestimo
+    atualizaremprestimo,
+    excluiremprestimo
 }

@@ -30,6 +30,6 @@ rotas.get('/emprestimos', emprestimos.listarEmprestimos);
 rotas.get('/emprestimos/:id', emprestimos.obterEmprestimo);
 rotas.post('/emprestimos', emprestimos.cadastrarEmprestimo);
 rotas.put('/emprestimos/:id', emprestimos.atualizaremprestimo);
-// rotas.delete('/emprestimos/:id', emprestimos.excluirEmprestimo);
+rotas.delete('/emprestimos/:id', emprestimos.excluiremprestimo);
 
 module.exports = rotas;
