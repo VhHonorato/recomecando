@@ -1,4 +1,6 @@
 const conexao = require('../conexao');
+const securePassword = require('secure-password')
+const pwd = securePassword();
 
 const listarUsuarios = async (req, res) => {
     try {
@@ -38,7 +40,7 @@ const obterUsuario = async (req,res) =>{
 };
 
 const cadastrarUsuario = async (req, res) =>{
-    const {nome, idade, email, telefone, cpf} = req.body;
+    const {nome, idade, email, telefone, cpf, senha} = req.body;
     try {
         if(!nome){
            return res.status(400).json('O campo nome é obrigatório.')
@@ -48,6 +50,9 @@ const cadastrarUsuario = async (req, res) =>{
         };
         if(!cpf){
             return res.status(400).json('O campo cpf é obrigatório.')  
+        };
+        if(!senha){
+            return res.status(400).json('O campo senha é obrigatório.')  
         };
         const {rows : usuarios} = await conexao.query('select * from usuarios')
         for (const usuario of usuarios) {
@@ -60,7 +65,8 @@ const cadastrarUsuario = async (req, res) =>{
                 return res.status(400).json('CPF já cadastrado');
             };
         };
-        const cadastrarLivro = await conexao.query('insert into usuarios (nome, idade, email, telefone, cpf) values ($1, $2, $3, $4, $5)', [nome, idade, email, telefone, cpf]);
+        const hash =(await pwd.hash(Buffer.from(senha))).toString('hex');
+        const cadastrarLivro = await conexao.query('insert into usuarios (nome, idade, email, telefone, cpf, senha) values ($1, $2, $3, $4, $5, $6)', [nome, idade, email, telefone, cpf, hash]);
         
         if(cadastrarLivro.rowCount === 0){
             return res.status(400).json('Não foi possível cadastrar o usuário');

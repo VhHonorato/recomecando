@@ -49,3 +49,7 @@ create table emprestimos (
 --Para testar a tabela emprestimos
 insert into emprestimos (usuario_id, livro_id)
 values (2, 5);
+
+--Adicionada coluna senha, na tabela usuarios
+alter table usuarios
+add column senha text
