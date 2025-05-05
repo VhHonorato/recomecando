@@ -1,4 +1,6 @@
-const conexao = require('../conexao')
+const conexao = require('../conexao');
+const jwt = require('jsonwebtoken');
+const jwt_secret = require('../jwt_secret');
 
 const listarAutores = async (req, res) => {
     try {
@@ -33,18 +35,28 @@ const obterAutor = async (req, res) => {
 };
 
 const cadastrarAutor = async (req, res) => {
-    const {nome, idade} = req.body;
+    const {nome, idade, token} = req.body;
     if(!nome){
-        return res.status(400).json("Ocampo nome é obrigatório")
+        return res.status(400).json("O campo nome é obrigatório")
+    }
+    if(!token){
+        return res.status(400).json("O campo token é obrigatório.")
+    }
+    try {
+        const usuario = jwt.verify(token, jwt_secret);
+        console.log(`${usuario.nome} cadastrou um autor.`);
+
+    } catch{
+        return res.status(400).json("Token inválido");
     }
     try {
       const autor = await conexao.query('insert into autores (nome, idade) values ($1, $2)', [nome, idade]);
-
+      
       if(autor.rowCount === 0){
-        
-
+        return res.status(200).json("Não foi possível cadastrar o autor.");  
+       
       } 
-      return res.status(200).json("Autor casdastrado com sucesso.") 
+      return res.status(200).json("Autor casdastrado com sucesso.");
     } catch (error) {
         res.status(400).json(error.message);
     }

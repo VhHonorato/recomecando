@@ -2,7 +2,7 @@ const conexao = require('../conexao');
 const securePassword = require('secure-password')
 const pwd = securePassword();
 const jwt = require('jsonwebtoken');
-const jwtSecrte = require("../jwt_secret")
+const jwt_secret = require('../jwt_secret');
 
 const login = async (req, res) => {
     const {email, senha} = req.body;
@@ -13,7 +13,7 @@ const login = async (req, res) => {
     if(!senha){
         res.status(400).json("O campo senha é obrigatório");
     }
-    
+
     try {
         const query = 'select * from usuarios where email = $1';
         const usuarios = await conexao.query(query, [email]);
@@ -45,7 +45,7 @@ const login = async (req, res) => {
             nome: usuario.nome,
             email: usuario.email
             
-        },jwtSecrte);
+        },jwt_secret,{expiresIn: "2h"});
 
         return res.send(token);
 
