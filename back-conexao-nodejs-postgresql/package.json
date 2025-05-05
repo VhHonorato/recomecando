@@ -11,6 +11,7 @@
   "description": "",
   "dependencies": {
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "password": "^0.1.1",
     "pg": "^8.14.1",
     "secure": "^0.1.3",
