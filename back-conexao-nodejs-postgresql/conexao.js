@@ -5,10 +5,8 @@ const pool = new Pool({
     host: 'localhost',
     database: 'biblioteca',
     password: 'postgres',
-    port: 5433,
-    ssl:{
-        rejectUnauthorized: false
-    }
+    port: 5433
+  
 
 });
 
